@@ -1,0 +1,13 @@
+{
+  "name": "sfap.js",
+  "repo": "jwerle/sfap.js",
+  "description": "Client side javascript for sfap.co",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {},
+  "development": {},
+  "license": "MIT",
+  "scripts": [
+    "index.js"
+  ]
+}
