@@ -1,10 +1,23 @@
 {
-  "name": "sfap.js",
+  "name": "sfap",
   "repo": "jwerle/sfap.js",
   "description": "Client side javascript for sfap.co",
   "version": "0.0.1",
   "keywords": [],
-  "dependencies": {},
+  "dependencies": {
+    "visionmedia/superagent": "*",
+    "sfapco/topcoat.js": "*",
+    "jwerle/sregex": "*",
+    "juliangruber/events": "*",
+    "component/url": "*",
+    "visionmedia/debug": "*",
+    "component/querystring": "*",
+    "kaerus-component/hash": "*",
+    "visionmedia/node-querystring": "*",
+    "jb55/domready": "*",
+    "jwerle/doT": "*",
+    "component/domify": "*"
+  },
   "development": {},
   "license": "MIT",
   "scripts": [

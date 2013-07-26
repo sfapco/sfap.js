@@ -1,6 +1,7 @@
 
 build: components index.js
-	@component build --dev
+	@rm -f sfap.js
+	@component build --dev -o . -n sfap
 
 components: component.json
 	@component install --dev
