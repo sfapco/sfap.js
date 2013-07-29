@@ -16,7 +16,11 @@
     "visionmedia/node-querystring": "*",
     "jb55/domready": "*",
     "jwerle/doT": "*",
-    "component/domify": "*"
+    "component/domify": "*",
+    "jkroso/viewport": "*",
+    "component/preloader": "*",
+    "gorillatron/extend": "*",
+    "timoxley/scroll-position": "*"
   },
   "development": {},
   "license": "MIT",

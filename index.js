@@ -13,6 +13,9 @@ var request = require('superagent')
   , domeready = require('domready')
   , sregex = require('sregex')
   , dot = require('doT')
+  , domify = require('domify')
+  , Preloader = require('preloader')
+  , extend = require('extend')
   , wait = setTimeout
   , global = global || window
 
@@ -41,10 +44,10 @@ dot.templateSettings.varname = 'view';
 module.exports = sfap;
 function sfap (name, location) {
 	name = name || 'app-' + (Math.random().toString(16).slice(2));
-	var app = initialize({
+	var app = initialize(extend(true, new EventEmitter(), {
 		name: name, 
 		location: location || window.location || {}
-	})
+	}))
 
 	return app;
 }
@@ -66,11 +69,27 @@ function initialize (app) {
 
 	// bind topcoat to `.ui`
 	app.ui = topcoat;
+	app.$$ = app.$T = app.ui.TopcoatElement;
+
+	
+	// bind domify to `.dom`
+	app.dom = domify;
 
 
 	// filter stack
 	app.stack = [];
 
+
+	// scroll hooks
+	app.scroll = require('scroll-position');
+
+
+	// assets object
+	app.assets = {
+		preloader: {
+			images: new Preloader()
+		}
+	};
 	
 	// bind `dot.template` and attach to `app`
 	app.template = function (str) {
@@ -92,6 +111,7 @@ function initialize (app) {
 		stack: [],
 		on: hash.route.bind(hash),
 		set: hash.update.bind(hash),
+		get: hash.get.bind(hash),
 		use: function (fn) {
 			if ('function' !== typeof fn) throw new TypeError("expecting `function`");
 			else this.stack.push(fn);
@@ -123,6 +143,34 @@ function initialize (app) {
 		if ('function' !== typeof fn) throw new TypeError("expecting `function`");
 		else domeready(fn.bind(this));
 		return this;
+	};
+
+
+	/**
+	 * Defers execution by approximately `0ms`
+	 *
+	 * @api public
+	 * @param {Function} `fn`
+	 */
+
+	app.defer = function (fn) {
+		app.wait(0, fn);
+		return this;
+	};
+
+
+	/**
+	 * Defers execution by a given ms
+	 *
+	 * @api public
+	 * @param {Number} `ms`
+	 * @param {Function} `fn`
+	 * @param {Boolean} `returnId`
+	 */
+
+	app.wait = function (ms, fn, returnId) {
+		var id = setTimeout(fn, ms);
+		return true === returnId? returnId : this;
 	};
 
 
